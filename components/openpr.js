@@ -171,7 +171,7 @@ export default function Questions (props) {
 		return (
 			<div>
 				<p>If you agree to opening a pull request to complete your
-				submission, click submit:</p>
+				submission, please proceed.</p>
 				<div className='text-center'>
 					<Button
 						className='actionButton'
