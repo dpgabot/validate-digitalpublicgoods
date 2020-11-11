@@ -1,10 +1,10 @@
 import Link from 'next/link'
+import {ProgressBar} from 'react-bootstrap'
 
-export default function Footer () {
+export default function Footer (props) {
   return (
     <footer className='text-center'>
-      <hr/>
-      <div>Placeholder for progress bar</div>
+      <ProgressBar now={props.progress} className='mb-2' />
     </footer>
   )
 }

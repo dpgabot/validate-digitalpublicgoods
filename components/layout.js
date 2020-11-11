@@ -1,14 +1,14 @@
 import Header from '../components/header'
 import Footer from '../components/footer'
 
-export default function Layout ({children}) {
+export default function Layout (props) {
   return (
     <>
       <Header/>
       <main>
-        {children}
+        {props.children}
       </main>
-      <Footer />
+      <Footer progress={props.progress} />
     </>
   )
 }

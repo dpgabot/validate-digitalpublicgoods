@@ -41,10 +41,16 @@ header {
 }
 
 footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 680px;
     margin: 0 auto;
     background-color: #f5f5f5;
     border-radius: .6rem .6rem 0 0;
+}
+
+blockquote {
+  font-size: 0.9em;
+  padding: 1em;
+  font-family: monospace;
 }

@@ -76,11 +76,12 @@ const options = {
     // redirect: async (url, baseUrl) => { return Promise.resolve(baseUrl) },
     session: async (session, user, sessionToken) => { 
       session.accessToken = user.accessToken
+      session.ghUsername = user.ghUsername
       return Promise.resolve(session) },
     jwt: async (token, user, account, profile, isNewUser) => { 
       if(account){
         token.accessToken = account.accessToken
-        console.log('Access Token: '+account.accessToken)
+        token.ghUsername = profile.login
       }
       return Promise.resolve(token) }
   },
