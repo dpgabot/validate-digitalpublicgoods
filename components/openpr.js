@@ -170,8 +170,8 @@ export default function Questions (props) {
 	function SubmitPR() {
 		return (
 			<div>
-				<p>If you agree to opening a pull request to complete your
-				submission, please proceed.</p>
+				<p className="mt-2">If you agree to opening a pull request to complete your
+				submission, please click submit below.</p>
 				<div className='text-center'>
 					<Button
 						className='actionButton'
@@ -188,11 +188,19 @@ export default function Questions (props) {
 	function PrSuccess(url) {
 		return (
 			<div className="text-center pt-3">
-				👍 Success! Your review has been submitted.<br />
-				You can track your submission here:<br/>
+				<p>👍 Success! Your review has been submitted and this project is one
+				step closer to being listed as a digital public good! You can track your
+				submission here:<br/>
 				<a href={url} target="_blank">{url}</a>
-				<p>&nbsp;</p>
-				You now can <a href="/">review another project</a> or you can nominate a <a href="https://digitalpublicgoods.net/submission" target="_blank">new digital public good</a>.
+				</p>
+				<Button
+					className='actionButton'
+					variant="success"
+					href='/projects'>
+					Ready to do 1 more?
+				</Button>
+				<p className="pt-2">Know of any project that should a digital public good?<br/>
+				<a href="https://digitalpublicgoods.net/submission" target="_blank">Nominate it!</a></p>
 			</div>
 		)
 	}
@@ -208,14 +216,13 @@ export default function Questions (props) {
 
 			<p>&nbsp;</p>
 
-			<p>The final step in this process is to submit your work in the form
-			of a pull request to the <a
-			href="https://github.com/{refOwner}/{repo}"
-			target="_blank">{refOwner}/{repo}</a> repository. This will involve
-			the following steps, which will be handled automatically once you
-			click the submit button below:</p>
+			<p>The final step in this process is to submit your work. Once you
+			click the submit button below a pull request will be automatically
+			opened in <a href="https://github.com/{refOwner}/{repo}" target="_blank">this repository</a>.</p>
 
-			<p>
+			<p>This will:</p>
+
+			<p className="mb-0">
 				<span>{stage0}</span>&nbsp;Fork <i>{refOwner}/{repo}</i> into <i>{owner}/{repo}</i><br/>
 				<span>{stage1}</span>&nbsp;Retrieve a reference to the <i>master</i> branch<br/>
 				<span>{stage2}</span>&nbsp;Create a feature branch<br/>

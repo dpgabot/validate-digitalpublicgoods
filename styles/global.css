@@ -1,3 +1,4 @@
+
 body {
   font-family: -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   padding: 0 1rem 1rem 1rem;
@@ -53,4 +54,8 @@ blockquote {
   font-size: 0.9em;
   padding: 1em;
   font-family: monospace;
+}
+
+#__next {
+  width: 100%;
 }
