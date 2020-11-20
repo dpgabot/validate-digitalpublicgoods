@@ -1,87 +1,114 @@
 import React, { useState, useEffect } from 'react'
 import { signIn, signOut, useSession } from 'next-auth/client'
-import {Button} from 'react-bootstrap'
+import {Button, CardColumns, Card, Container, Spinner} from 'react-bootstrap'
 import Layout from '../components/layout'
 import Questions from '../components/questions'
 import OpenPR from '../components/openpr'
+import Review from './review'
 
-const qs = [
-	{
-		item: 'license',
-		text: 'The project owner claims that OpenCRVS is licensed under a <span class="emphasis">Mozilla Public License 2.0</span> and provided <a href="https://www.opencrvs.org/license" target="_blank" class="emphasis">this link</a> to the license.',
-		question: 'Does <a href="https://www.opencrvs.org/license" target="_blank" class="emphasis">this link</a> point to a <span class="emphasis">Mozilla Public License 2.0</span>?'
-	},
-	{
-		item: 'SDG[0]',
-		text: 'The project owner claims that OpenCRVS is relevant to <span class="emphasis">SDG 16: Peace, Justice and Strong Institutions</span>, and provided both this text: <blockquote>OpenCRVS is a digital public good to help achieve universal civil registration and evidence-based decision making in all country contexts.\nOpenCRVS was created in direct response to: \nSDG Goal/Target 16.9: \"By 2030, provide legal identity for all, including birth registration\"\nIndicator: Proportion of children under 5 years whose births have been registered with a civil authority, by age.\n In addition (as of March 2017), 67 of the 230 SDG indicators can be measured effectively by using data derived from well-functioning CRVS systems, in particular for the numerators (births, deaths) and denominators (total population, live births, total deaths). These indicators cover 12 of the SDG 17 goals (Goals 1, 2, 3, 4, 5, 8, 9, 10, 11, 12, 16, and 17).</blockquote> and the following link: <a href="https://documentation.opencrvs.org/opencrvs-core/">https://documentation.opencrvs.org/opencrvs-core/</a>',
-		question: 'Does the evidence provided justify their relevance to <span class="emphasis">SDG 16</span>?'
-	},
-	{
-		item: 'SDG[1]',
-		text: 'The project owner claims that OpenCRVS is relevant to <span class="emphasis">SDG 17: Partnership for the Goals</span>, and provided both this text: <blockquote>OpenCRVS is a digital public good to help achieve universal civil registration and evidence-based decision making in all country contexts.\nOpenCRVS was created in direct response to: \nSDG Goal/Target 17.18: \"By 2020? increase significantly the availability of high-quality, timely and reliable data disaggregated by income, gender, age, race, ethnicity, migratory status, disability, geographic location and other characteristics relevant in national contexts\"\nIndicator 1: Proportion of sustainable development indicators produced at the national level with full disaggregation when relevant to the target, in accordance with the Fundamental Principles of Official Statistics\nSDG Goal/Target 17.19: \"By 2030? support statistical capacity building in countries\"\nIndicator 2: Proportion of countries that have conducted at least one population and housing census in the last 10 years and have achieved 100 percent birth registration and 80 percent death registration.\nIn addition (as of March 2017), 67 of the 230 SDG indicators can be measured effectively by using data derived from well-functioning CRVS systems, in particular for the numerators (births, deaths) and denominators (total population, live births, total deaths). These indicators cover 12 of the SDG 17 goals (Goals 1, 2, 3, 4, 5, 8, 9, 10, 11, 12, 16, and 17).</blockquote> and the following link: <a href="https://documentation.opencrvs.org/opencrvs-core/">https://documentation.opencrvs.org/opencrvs-core/</a>',
-		question: 'Does the evidence provided justify their relevance to <span class="emphasis">SDG 17</span>?'
-	}
-]
-
+const OWNER = 'unicef';
+const REPO = 'publicgoods-candidates';
+const BRANCH = 'master'
+const GITHUBAPI = `https://api.github.com/repos/${OWNER}/${REPO}/`;
+const GITHUBRAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/`;
 
 export default function Page () {
+
 	const [ session, loading ] = useSession()
+	const [submissions, setSubmissions] = useState(null);
+	const [currentReview, setCurrentReview] = useState(null);
 
-	const [counter, setCounter] = useState(0);
-	const [question, setQuestion] = useState(qs[0]);
-	const [questions, setQuestions] = useState(qs);
-	const [result, setResult] = useState({});
-
-
-	function handleAnswer(answer) {
-
-		result[question.item] = answer;
-
-		setResult(result)
-
-		if (counter < questions.length) {
-			setQuestion(questions[counter+1]);
-			setCounter(counter + 1);
-		} 
-		console.log(result)
-
+	function handleClick(submission){
+		setCurrentReview(submission)
+		console.log('handleClick')
 	}
 
-	return (
-		<Layout progress={counter/questions.length*100}>
-			{!session &&
-				<>
-					<h1 style={{textAlign: 'center', padding: '1em 0'}}>Validate Digital Public Goods</h1>
-
-					<p>Lorem ipsum dolor sit amet, <b>crowdsourcing tool</b> consectetur adipiscing elit. Aenean dapibus ultrices rhoncus. Integer imperdiet felis et lectus rhoncus, non iaculis <b>it is amazing, really</b> augue dignissim. Sed sit amet neque vel <b>you can contribute</b> nisi quis varius. Aenean a vestibulum nibh, eu varius sapien. Nunc convallis euismod ipsum non tincidunt. Aliquam erat volutpat. Proin et felis vel <b>validate digital public good submissions</b> ex pellentesque posuere sed at ligula. Morbi sodales, magna luctus consectetur cursus, libero nulla pulvinar leo, sed pellentesque elit ipsum sit amet massa, <b>amazing way to contribute</b>.</p>
-					<p>In order to use this online validation tool, you need to sign in through GitHub by clicking on the button below. This web application will use your credentials to submit your review at the end by opening a pull request to our repository on your behalf. For this reason, the application will request the authentication <code>public_repo</code> scope. Refer to GitHub's documentation <a href="https://developer.github.com/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/" target="_blank">Understanding scopes for OAuth Apps</a> for additional information about this setting. This application is open source, and you can review the <a href="https://github.com/lacabra/validate-digitalpublicgoods" target="_blank">source code</a> at anytime.</p>
-					<div className="text-center">
-						<Button
-						href={`/api/auth/signin`}
-						className='actionButton'
-						style={{width: '80px'}}
-						variant="primary"
-						onClick={(e) => {
-							e.preventDefault()
-							 signIn()
-						}}>
-							Sign in
-						</Button>
-					</div>
-				</>
-			}
-			{session && <>
-				{(counter < questions.length) &&
-				<Questions
-					data = {question}
-					counter = {counter+1}
-					onAnswer = {handleAnswer}
-				/>}
-				{!(counter < questions.length) &&
-					<OpenPR
-						answer={result}/>
+	useEffect(() => {
+		async function fetchData() {
+			let array = []
+			const result = await fetch(`${GITHUBAPI}contents/screening`);
+			const items =  await result.json();
+			for(let i=0; i < items.length; i++) {
+				if(items[i].size > 50) {
+					const response1 = await fetch(GITHUBRAW+items[i].path);
+					const submission = await response1.json();
+					const response2 = await fetch(GITHUBRAW+'nominees/'+items[i].name);
+					const nominee = await response2.json()
+					array.push(Object.assign({}, nominee, submission))
 				}
-			</>}
-		</Layout>
-	)
+			}
+			setSubmissions(array);
+		}
+		fetchData();
+	}, []);
+
+	if(!session) {
+		return(
+			<>
+				<h1 style={{textAlign: 'center', padding: '1em 0'}}>Validate Digital Public Goods</h1>
+				<p>Lorem ipsum dolor sit amet, <b>crowdsourcing tool</b> consectetur adipiscing elit. Aenean dapibus ultrices rhoncus. Integer imperdiet felis et lectus rhoncus, non iaculis <b>it is amazing, really</b> augue dignissim. Sed sit amet neque vel <b>you can contribute</b> nisi quis varius. Aenean a vestibulum nibh, eu varius sapien. Nunc convallis euismod ipsum non tincidunt. Aliquam erat volutpat. Proin et felis vel <b>validate digital public good submissions</b> ex pellentesque posuere sed at ligula. Morbi sodales, magna luctus consectetur cursus, libero nulla pulvinar leo, sed pellentesque elit ipsum sit amet massa, <b>amazing way to contribute</b>.</p>
+				<p>In order to use this online validation tool, you need to sign in through GitHub by clicking on the button below. This web application will use your credentials to submit your review at the end by opening a pull request to our repository on your behalf. For this reason, the application will request the authentication <code>public_repo</code> scope. Refer to GitHub's documentation <a href="https://developer.github.com/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/" target="_blank">Understanding scopes for OAuth Apps</a> for additional information about this setting. This application is open source, and you can review the <a href="https://github.com/lacabra/validate-digitalpublicgoods" target="_blank">source code</a> at anytime.</p>
+				<div className="text-center">
+					<Button
+					href={`/api/auth/signin`}
+					className='actionButton'
+					style={{width: '80px'}}
+					variant="primary"
+					onClick={(e) => {
+						e.preventDefault()
+						 signIn()
+					}}>
+						Sign in
+					</Button>
+				</div>
+			</>
+		)
+	} else {
+		if(currentReview){
+			return (
+				<Review
+					submission={currentReview}
+				/>
+			)
+		}else{
+			console.log(submissions)
+			return (
+				<Layout>
+					<p className="mt-5 mb-2">Please choose one of the projects below to review:</p>
+					{ submissions &&
+						<CardColumns>
+						  	{submissions.map( s => (
+						  		<Card key={s.name}>
+								    <Card.Body>
+								    	<Card.Title className="text-center">{s.name}</Card.Title>
+								    	<Card.Text>{s.description}</Card.Text>
+								    </Card.Body>
+								    <Container className="text-center mb-3">
+								    	<Button variant="primary" onClick={e => handleClick(s)}>Review</Button>
+								    </Container>
+							  	</Card>
+							))}
+						</CardColumns>
+					}
+					{ !submissions &&
+						<CardColumns>
+						  	{[1,2,3].map( s => (
+						  		<Card key={s}>
+								    <Card.Body className="text-center">
+								    	
+								    		<Spinner animation="border" role="status" className="mt-5 mb-5">
+								  				<span className="sr-only">Loading...</span>
+											</Spinner>
+								    </Card.Body>
+								    <Container className="text-center mb-1">
+								    	<p>&nbsp;</p>
+								    </Container>
+							  	</Card>
+							))}
+						</CardColumns>
+					}	
+				</Layout>
+			)
+		}
+	}
 }

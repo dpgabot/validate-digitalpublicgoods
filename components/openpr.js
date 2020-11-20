@@ -114,9 +114,9 @@ export default function Questions (props) {
 		setStage2(DONE);
 		setStage3(WAIT);
 
-		const filename = 'myfile.json'
+		const filename = 'opencrvs-'+owner+'.json'
 		// Commit a file
-		response = await octokit.request(`PUT /repos/{owner}/{repo}/contents/{filename}`,{
+		response = await octokit.request(`PUT /repos/{owner}/{repo}/contents/reviews/{filename}`,{
 			owner,
 			repo,
 			filename,
@@ -191,6 +191,8 @@ export default function Questions (props) {
 				👍 Success! Your review has been submitted.<br />
 				You can track your submission here:<br/>
 				<a href={url} target="_blank">{url}</a>
+				<p>&nbsp;</p>
+				You now can <a href="/">review another project</a> or you can nominate a <a href="https://digitalpublicgoods.net/submission" target="_blank">new digital public good</a>.
 			</div>
 		)
 	}

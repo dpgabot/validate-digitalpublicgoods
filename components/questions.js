@@ -12,8 +12,7 @@ export default function Questions (props) {
 
 	return (
 		<div className='mt-5 mb-5'>
-
-			<h2>Statement {props.counter}</h2>
+			<h2>Statement {props.counter} of {props.total}</h2>
 			<p style={{fontSize: '1.2em'}} dangerouslySetInnerHTML={{__html: props.data.text.replace(/(?:\r\n|\r|\n)/g, '<br>')}} />
 
 			<h2>Question</h2>
@@ -27,8 +26,6 @@ export default function Questions (props) {
 					<Button className='actionButton' style={{width: '80px'}} variant="danger" onClick={e => handleClick(e, false)}>No</Button>
 				</Col>
 			</Row>
-
-
 		</div>
 	)
 }
