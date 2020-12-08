@@ -23,6 +23,24 @@ const SDGS = ['No Poverty',
               'Peace and Justice Strong Institutions',
               'Partnerships to achieve the Goal']
 
+const SDGLinks = ['https://www.un.org/sustainabledevelopment/poverty/',
+				  'https://www.un.org/sustainabledevelopment/hunger/',
+				  'https://www.un.org/sustainabledevelopment/health/',
+				  'https://www.un.org/sustainabledevelopment/health/',
+				  'https://www.un.org/sustainabledevelopment/education/',
+				  'https://www.un.org/sustainabledevelopment/water-and-sanitation/',
+				  'https://www.un.org/sustainabledevelopment/energy/',
+				  'https://www.un.org/sustainabledevelopment/economic-growth/',
+				  'https://www.un.org/sustainabledevelopment/infrastructure-industrialization/',
+				  'https://www.un.org/sustainabledevelopment/inequality',
+				  'https://www.un.org/sustainabledevelopment/cities',
+				  'https://www.un.org/sustainabledevelopment/sustainable-consumption-production',
+				  'https://www.un.org/sustainabledevelopment/climate-change',
+				  'https://www.un.org/sustainabledevelopment/oceans',
+				  'https://www.un.org/sustainabledevelopment/biodiversity',
+				  'https://www.un.org/sustainabledevelopment/peace-justice',
+				  'https://www.un.org/sustainabledevelopment/globalpartnerships']
+
 const licenses = {
 	'CC-BY-1.0': 'Creative Commons Attribution 1.0 Generic',
 	'CC-BY-2.0': 'Creative Commons Attribution 2.0 Generic',
@@ -216,7 +234,7 @@ export default function Review (props) {
 		}
 
 		for(let i=0; i < obj.SDGs.length; i++) {
-			let text = `The project owner claims that ${obj.name} is relevant to <span class="emphasis">SDG ${obj.SDGs[i].SDGNumber}: ${SDGS[obj.SDGs[i].SDGNumber-1]}</span>, `;
+			let text = `The project owner claims that ${obj.name} is relevant to <a href="${SDGLinks[obj.SDGs[i].SDGNumber-1]}" target="_blank"><span class="emphasis">SDG ${obj.SDGs[i].SDGNumber}: ${SDGS[obj.SDGs[i].SDGNumber-1]}</span></a>, `;
 			if(obj.SDGs[i].evidenceText){
 				if(obj.SDGs[i].evidenceURL){
 					text += `and provided both ${thisLink(obj.SDGs[i].evidenceURL)}, and this text: <blockquote>${obj.SDGs[i].evidenceText}</blockquote>`;
@@ -229,7 +247,7 @@ export default function Review (props) {
 			const o = {
 				item: `SDG[${i}]`,
 				text: text,
-				question: `Does the evidence provided justify their relevance to <span class="emphasis">SDG ${obj.SDGs[i].SDGNumber}</span>?`
+				question: `Does the evidence provided justify their relevance to <a href="${SDGLinks[obj.SDGs[i].SDGNumber-1]}" target="_blank"><span class="emphasis">SDG ${obj.SDGs[i].SDGNumber}</span></a>? Specifically, does this project advance some of the specific targets listed for <a href="${SDGLinks[obj.SDGs[i].SDGNumber-1]}" target="_blank"><span class="emphasis">Goal ${obj.SDGs[i].SDGNumber}</span></a>?`
 			}
 			rs.push(o);
 		}
