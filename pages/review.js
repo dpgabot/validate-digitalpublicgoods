@@ -261,9 +261,19 @@ export default function Review (props) {
 			let doc = {
 				item: 'documentation',
 				text: `The project owner for ${obj.name} puts forward the following URL(s) as the project documentation: ${links}`,
-				question: `Does the documentation provided satisfy the following criteria?<br/>For software projects, this should be present as technical documentation that would allow a technical person unfamiliar with the project to launch and run the software. For data projects, this should be present as documentation that describes all the fields in the set, and provides context on how the data was collected and how it should be interpreted. For content, this should indicate any relevant compatible apps, software, hardware required to access the content and any instructions about how to use it.`
+				question: `Does the documentation provided satisfy the following criteria?<br/><ul><li>For <b>software</b> projects, this should be present as technical documentation that would allow a technical person unfamiliar with the project to launch and run the software.</li><li>For <b>data</b> projects, this should be present as documentation that describes all the fields in the set, and provides context on how the data was collected and how it should be interpreted.</li><li>For <b>content</b>, this should indicate any relevant compatible apps, software, hardware required to access the content and any instructions about how to use it.</li></ul>`
 			}
 			rs.push(doc);
+		}
+
+		if(obj.NonPII.collectsNonPII === 'Yes' &&
+			obj.NonPII.checkNonPIIAccessMechanism === 'Yes') {
+			let nonPII = {
+				item: 'nonPII',
+				text: `The project owner for ${obj.name} reports that (a) the project collects or uses non-personally identifiable information (non-PII) data, and (b) there is a mechanism for extracting or importing non-PII data from the system in a non-proprietary format. They describe such mechanism as follows: <blockquote>${parseURLs(obj.NonPII.nonPIIAccessMechanism)}</blockquote>`,
+				question: `Is there enough evidence in the above description to reasonably assert that non-PII data can be imported or exported in a non-proprietary format?`
+			}
+			rs.push(nonPII);
 		}
 
 		setQuestions(rs);
