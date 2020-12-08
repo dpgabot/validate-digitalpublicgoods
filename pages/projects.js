@@ -20,6 +20,18 @@ export default function Projects () {
 	const [ submissions, setSubmissions] = useState(null);
 	const [ currentReview, setCurrentReview] = useState(null);
 
+	/**
+	 * Shuffles array in place. ES6 version
+	 * @param {Array} a items An array containing the items.
+	 */
+	function shuffle(a) {
+	    for (let i = a.length - 1; i > 0; i--) {
+	        const j = Math.floor(Math.random() * (i + 1));
+	        [a[i], a[j]] = [a[j], a[i]];
+	    }
+	    return a;
+	}
+
 	useEffect(() => {
 
 		if(!loading && !session){
@@ -45,15 +57,15 @@ export default function Projects () {
 					array.push(Object.assign({}, nominee, submission))
 				}
 			}
-			setSubmissions(array);
+			setSubmissions(shuffle(array));
 		}
 		fetchData();
 	}, []);
 
 	if(!session) {
 		return(
-			<Container fluid>
-				<div fluid className="text-center mt-5 pt-5">
+			<Container fluid="true">
+				<div fluid="true" className="text-center mt-5 pt-5">
 					<Spinner animation="border" role="status" className="mt-5 mb-5">
 		  				<span className="sr-only">Loading...</span>
 					</Spinner>
