@@ -59,3 +59,7 @@ blockquote {
 #__next {
   width: 100%;
 }
+
+.selectedButton {
+  box-shadow: 0 0 2px 3px blue;
+}

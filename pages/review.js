@@ -173,24 +173,28 @@ const licenses = {
 }
 
 export default function Review (props) {
-	const [ session, loading ] = useSession()
+	const [session, loading ] = useSession()
 
 	const [counter, setCounter] = useState(0);
 	const [question, setQuestion] = useState(null);
 	const [questions, setQuestions] = useState(null);
 	const [result, setResult] = useState({});
 
-	console.log(props.submission)
-
-	function handleAnswer(answer) {
+	function handleAnswer(answer, next) {
 		result[question.item] = answer;
 		setResult(result)
 
-		if (counter < questions.length) {
-			setQuestion(questions[counter+1]);
-			setCounter(counter + 1);
-		} 
-		console.log(result)
+		if (next) {
+			if (counter < questions.length) {
+				setQuestion(questions[counter + 1]);
+				setCounter(counter + 1);
+			}
+		} else {
+			if (counter > 0) {
+				setQuestion(questions[counter - 1]);
+				setCounter(counter - 1);
+			}
+		}
 	}
 
 	function thisLink(text){
@@ -219,8 +223,6 @@ export default function Review (props) {
 
 	useEffect(() => {
 		const obj = props.submission
-
-		console.log(obj)
 
 		let rs = []
 
@@ -307,6 +309,7 @@ export default function Review (props) {
 					counter = {counter+1}
 					total = {questions.length}
 					onAnswer = {handleAnswer}
+					result = {(result[question.item] ? result[question.item] : null)}
 				/>}
 				{!(counter < questions.length) &&
 					<OpenPR

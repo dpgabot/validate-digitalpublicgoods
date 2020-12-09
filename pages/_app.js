@@ -1,5 +1,6 @@
 import { Provider } from 'next-auth/client'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
 import '../styles/global.css'
 
 // Use the <Provider> to improve performance and allow components that call
