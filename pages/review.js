@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { signIn, signOut, useSession } from 'next-auth/client'
-import {Button, Spinner} from 'react-bootstrap'
+import {Button, Spinner, Alert} from 'react-bootstrap'
 import Layout from '../components/layout'
 import Questions from '../components/questions'
 import OpenPR from '../components/openpr'
@@ -304,13 +304,19 @@ export default function Review (props) {
 		return (
 			<Layout progress={counter/questions.length*100} label={`${Math.round(counter/questions.length*100)}%`}>
 				{(counter < questions.length) &&
-				<Questions
-					data = {question}
-					counter = {counter+1}
-					total = {questions.length}
-					onAnswer = {handleAnswer}
-					result = {(result[question.item] ? result[question.item] : null)}
-				/>}
+					<>
+						<Alert variant='info' className="text-center mt-3">
+							You are reviewing <a href={props.submission.website} target="_blank">
+							{props.submission.name}</a>
+						</Alert>
+						<Questions
+							data = {question}
+							counter = {counter+1}
+							total = {questions.length}
+							onAnswer = {handleAnswer}
+							result = {(result[question.item] ? result[question.item] : null)}
+						/>
+					</>}
 				{!(counter < questions.length) &&
 					<OpenPR
 						answer={result}/>

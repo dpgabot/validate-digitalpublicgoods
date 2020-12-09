@@ -81,7 +81,7 @@ export default function Questions (props) {
 	}
 
 	return (
-		<div className='mt-5 mb-5'>
+		<div className='mt-1 mb-5'>
 			<h2>[{props.counter}/{props.total}] Is this statement accurate?</h2>
 			<p style={{fontSize: '1.2em'}} dangerouslySetInnerHTML={{__html: props.data.text.replace(/(?:\r\n|\r|\n)/g, '<br>')}} />
 
