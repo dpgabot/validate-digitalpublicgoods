@@ -19,6 +19,7 @@ export default function Questions (props) {
 	const [ stage4, setStage4 ] = useState(START)
 	const [ submitPR, setSubmitPR ] = useState(null)
 	const [ error, setError ] = useState(null)
+	const [ pageTitle, setPageTitle] = useState('You are almost done!')
 
 	const refOwner = process.env.NEXT_PUBLIC_GITHUB_OWNER
 	const repo = process.env.NEXT_PUBLIC_GITHUB_REPO
@@ -164,6 +165,7 @@ export default function Questions (props) {
 		}
 
 		setStage4(DONE);
+		setPageTitle('Submission Completed!')
 		setSubmitPR(PrSuccess(repoURL))
 	}
 
@@ -188,7 +190,7 @@ export default function Questions (props) {
 	function PrSuccess(url) {
 		return (
 			<div className="text-center pt-3">
-				<p>👍 Success! Your review has been submitted and this project is one
+				<p>👍 <b>Thank you!</b> Your review has been submitted and this project is one
 				step closer to being listed as a digital public good! You can track your
 				submission here:<br/>
 				<a href={url} target="_blank">{url}</a>
@@ -212,7 +214,7 @@ export default function Questions (props) {
 	return (
 		<div> 
 
-			<h2 className="text-center pt-4">You are almost done!</h2>
+			<h2 className="text-center pt-4">{pageTitle}</h2>
 
 			<p>&nbsp;</p>
 
