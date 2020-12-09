@@ -267,7 +267,7 @@ export default function Review (props) {
 			obj.dependencies.isSoftwarePltIndependent === 'Yes') {
 			let deps = {
 				item: 'dependencies',
-				text: `The project owner for ${obj.name} claims that despite the fact that this open project has mandatory dependencies (i.e. libraries, hardware) that create more restrictions than the original license, the open source components are able to demonstrate independence from the closed component(s) and/or there are functional, open alternatives. The project owner provides the following evidence to support this claim:<blockquote>${parseURLs(obj.dependencies.pltIndependenceDesc)}`,
+				text: `The project owner for ${obj.name} claims that (a) despite the fact that this open project has mandatory dependencies (i.e. libraries, hardware) that create more restrictions than the original license, and (b) the open source components are able to demonstrate independence from the closed component(s) and/or there are functional, open alternatives. The project owner provides the following evidence to support this claim: <blockquote>${parseURLs(obj.dependencies.pltIndependenceDesc)}</blockquote>`,
 				question: `Does the evidence provided support the above claim?`
 			}
 		}
@@ -280,8 +280,8 @@ export default function Review (props) {
 			links += '</ul>'
 			let doc = {
 				item: 'documentation',
-				text: `The project owner for ${obj.name} puts forward the following URL(s) as the project documentation: ${links}`,
-				question: `Does the documentation provided satisfy the following criteria?<br/><ul><li>For <b>software</b> projects, this should be present as technical documentation that would allow a technical person unfamiliar with the project to launch and run the software.</li><li>For <b>data</b> projects, this should be present as documentation that describes all the fields in the set, and provides context on how the data was collected and how it should be interpreted.</li><li>For <b>content</b>, this should indicate any relevant compatible apps, software, hardware required to access the content and any instructions about how to use it.</li></ul>`
+				text: `The project owner for ${obj.name} puts forward the following URL(s) as the project documentation: ${links}.`,
+				question: `Does the documentation provided satisfy the following criteria?<br/><ul><li>For <b>software</b> projects, this should present technical documentation that would allow a technical person unfamiliar with the project to launch and run the software.</li><li>For <b>data</b> projects, this should present documentation that describes all the fields in the set, and provides context on how the data was collected and how it should be interpreted.</li><li>For <b>content</b>, this should indicate any relevant compatible apps, software, or hardware required to access the content and any instructions about how to use it.</li></ul>`
 			}
 			rs.push(doc);
 		}
