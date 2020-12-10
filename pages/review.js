@@ -209,6 +209,20 @@ export default function Review (props) {
 		return output;
 	}
 
+	function thisLinkList(text){
+		let output
+		if(text) {
+			const array = text.split(/[\n\s,]+/);
+			const parsedText = array.join(", ").replace(/, ((?:.(?!, ))+)$/, ' and $1');
+			const url = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+			output = parsedText.replace(url, "<a href='$1' target='_blank' class='emphasis'>this link</a>");
+			output = output.replace(/(?:\r\n|\r|\n)/g, '<br>');
+		} else {
+			output = '<span class="emphasis">no link</span>'
+		}
+		return output;
+	}
+
 	function parseURLs(text){
 		let output
 		if(text){
@@ -257,7 +271,7 @@ export default function Review (props) {
 		if(obj.ownership.isOwnershipExplicit === 'Yes') {
 			let owner = {
 				item: 'ownership',
-				text: `The project owner for ${obj.name} claims that ownership of the project and everything that the project produces is clearly defined and documented, and provides ${thisLink(obj.ownership.copyrightURL)} as supporting evidence.`,
+				text: `The project owner for ${obj.name} claims that ownership of the project and everything that the project produces is clearly defined and documented, and provides ${thisLinkList(obj.ownership.copyrightURL)} as supporting evidence.`,
 				question: `Does the evidence provided support the above claim?`
 			}
 			rs.push(owner);
