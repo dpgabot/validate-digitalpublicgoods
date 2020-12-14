@@ -116,13 +116,16 @@ export default function Questions (props) {
 		setStage3(WAIT);
 
 		const filename = 'opencrvs-'+owner+'.json'
+		let fileContent = JSON.parse(JSON.stringify(props.answer))	// deep copy object
+		fileContent['user'] = owner;
+		fileContent['timestamp'] = parseInt(Date.now()/1000);
 		// Commit a file
 		response = await octokit.request(`PUT /repos/{owner}/{repo}/contents/reviews/{filename}`,{
 			owner,
 			repo,
 			filename,
 			message: 'Commit file ' + filename,
-			content: btoa(JSON.stringify(props.answer, null, 2)+ "\n"),
+			content: btoa(JSON.stringify(fileContent, null, 2)+ "\n"),
 			branch: branchName
 		})
 
