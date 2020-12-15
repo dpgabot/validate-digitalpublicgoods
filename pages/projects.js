@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useCookies } from 'react-cookie';
 import { signIn, signOut, useSession, providers } from 'next-auth/client'
 import { useRouter } from 'next/router'
 import {Button, CardColumns, Card, Container, Spinner} from 'react-bootstrap'
@@ -16,9 +17,11 @@ const GITHUBRAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/
 export default function Projects () {
 
 	const router = useRouter()
-	const [ session, loading ] = useSession();
-	const [ submissions, setSubmissions] = useState(null);
-	const [ currentReview, setCurrentReview] = useState(null);
+	const [session, loading ] = useSession();
+	const [submissions, setSubmissions] = useState(null);
+	const [currentReview, setCurrentReview] = useState(null);
+	const [cookies, setCookie] = useCookies(['projectsReviewed']);
+
 
 	/**
 	 * Shuffles array in place. ES6 version
@@ -44,6 +47,10 @@ export default function Projects () {
 	}
 
 	useEffect(() => {
+		if(!cookies.projectsReviewed){
+			setCookie('projectsReviewed', '[]', { path: '/', maxAge: 5184000 }); // maxAge: 60 days
+		}
+
 		async function fetchData() {
 			let array = []
 			const result = await fetch(`${GITHUBAPI}contents/screening`);
@@ -54,7 +61,9 @@ export default function Projects () {
 					const submission = await response1.json();
 					const response2 = await fetch(GITHUBRAW+'nominees/'+items[i].name);
 					const nominee = await response2.json()
-					array.push(Object.assign({}, nominee, submission))
+					if(!cookies.projectsReviewed.includes(submission['name'])) {
+						array.push(Object.assign({}, nominee, submission))
+					}
 				}
 			}
 			setSubmissions(shuffle(array));
@@ -83,37 +92,46 @@ export default function Projects () {
 		}else{
 			return (
 				<Layout>
-					<p className="mt-5 mb-2">Please choose one of the projects below to review:</p>
-					{ submissions &&
-						<CardColumns>
-						  	{submissions.map( s => (
-						  		<Card key={s.name}>
-								    <Card.Body>
-								    	<Card.Title className="text-center">{s.name}</Card.Title>
-								    	<Card.Text>{s.description}</Card.Text>
-								    </Card.Body>
-								    <Container className="text-center mb-3">
-								    	<Button variant="primary" onClick={e => handleClick(s)}>Review</Button>
-								    </Container>
-							  	</Card>
-							))}
-						</CardColumns>
-					}
-					{ !submissions &&
-						<CardColumns>
-						  	{[1,2,3].map( s => (
-						  		<Card key={s}>
-								    <Card.Body className="text-center">
-								    		<Spinner animation="border" role="status" className="mt-5 mb-5">
-								  				<span className="sr-only">Loading...</span>
-											</Spinner>
-								    </Card.Body>
-								    <Container className="text-center mb-1">
-								    	<p>&nbsp;</p>
-								    </Container>
-							  	</Card>
-							))}
-						</CardColumns>
+					{ submissions 
+						? submissions.length 
+							? <>
+								<p className="mt-5 mb-2">Please choose one of the projects below to review:</p>
+								<CardColumns>
+									{ submissions.map( s => (
+									  		<Card key={s.name}>
+											    <Card.Body>
+											    	<Card.Title className="text-center">{s.name}</Card.Title>
+											    	<Card.Text>{s.description}</Card.Text>
+											    </Card.Body>
+											    <Container className="text-center mb-3">
+											    	<Button variant="primary" onClick={e => handleClick(s)}>Review</Button>
+											    </Container>
+										  	</Card>
+										))}
+									}
+								</CardColumns>
+							</>
+							: <div className='text-center pt-5 mt-5' style={{fontSize: '1.2em'}}>
+								🙌 Kudos to you! 🙌<br />You have reviewed all available submissions at this time.<br/>
+								Please check again at a later date.<br/>Thank you!
+							</div>
+						: <>
+							<p className="mt-5 mb-2">Please choose one of the projects below to review:</p>
+							<CardColumns>
+							  	{[1,2,3].map( s => (
+							  		<Card key={s}>
+									    <Card.Body className="text-center">
+									    		<Spinner animation="border" role="status" className="mt-5 mb-5">
+									  				<span className="sr-only">Loading...</span>
+												</Spinner>
+									    </Card.Body>
+									    <Container className="text-center mb-1">
+									    	<p>&nbsp;</p>
+									    </Container>
+								  	</Card>
+								))}
+							</CardColumns>
+						</>
 					}	
 				</Layout>
 			)

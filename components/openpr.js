@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
+import { useCookies } from 'react-cookie'
 import {Alert, Row, Col, Button} from 'react-bootstrap'
-import { Octokit } from "@octokit/core";
+import { Octokit } from "@octokit/core"
 import { useSession } from 'next-auth/client'
 import retry from 'async-retry'
 
@@ -20,6 +21,8 @@ export default function Questions (props) {
 	const [ submitPR, setSubmitPR ] = useState(null)
 	const [ error, setError ] = useState(null)
 	const [ pageTitle, setPageTitle] = useState('You are almost done!')
+	const [cookies, setCookie] = useCookies(['projectsReviewed']);
+
 
 	const refOwner = process.env.NEXT_PUBLIC_GITHUB_OWNER
 	const repo = process.env.NEXT_PUBLIC_GITHUB_REPO
@@ -115,7 +118,7 @@ export default function Questions (props) {
 		setStage2(DONE);
 		setStage3(WAIT);
 
-		const filename = 'opencrvs-'+owner+'.json'
+		const filename = props.projectName+'-'+owner+'.json'
 		let fileContent = JSON.parse(JSON.stringify(props.answer))	// deep copy object
 		fileContent['user'] = owner;
 		fileContent['timestamp'] = parseInt(Date.now()/1000);
@@ -170,6 +173,14 @@ export default function Questions (props) {
 		setStage4(DONE);
 		setPageTitle('Submission Completed!')
 		setSubmitPR(PrSuccess(repoURL))
+
+		let projectsReviewed = [];
+		if(cookies.projectsReviewed) {
+			projectsReviewed = cookies.projectsReviewed
+		}
+		projectsReviewed.push(props.projectName)
+		setCookie('projectsReviewed', JSON.stringify(projectsReviewed), { path: '/', maxAge: 5184000 }); // maxAge: 60 days
+
 	}
 
 	function SubmitPR() {

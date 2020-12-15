@@ -21,6 +21,7 @@
     "react": "^16.13.1",
     "react-bootstrap": "^1.4.0",
     "react-bootstrap-range-slider": "^2.0.2",
+    "react-cookie": "^4.0.3",
     "react-dom": "^16.13.1",
     "sqlite3": "^4.2.0"
   }

@@ -333,7 +333,9 @@ export default function Review (props) {
 					</>}
 				{!(counter < questions.length) &&
 					<OpenPR
-						answer={result}/>
+						answer={result}
+						projectName={props.submission.name}
+					/>
 				}
 			</Layout>
 		)
