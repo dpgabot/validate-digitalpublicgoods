@@ -209,6 +209,7 @@ export default function Questions (props) {
 				submission here:<br/>
 				<a href={url} target="_blank">{url}</a>
 				</p>
+				<p>We would very much appreciate your feedback on how we could improve this validation tool through this anonymous <a href="https://forms.gle/GqdoVS7HheoNn8s47" target="_blank">one-question form</a>. Thank you.</p>
 				<Button
 					className='actionButton'
 					variant="success"
