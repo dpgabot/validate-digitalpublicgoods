@@ -1,26 +1,28 @@
-# NextAuth.js Example
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](code_of_conduct.md)
 
-[next-auth-example.now.sh](https://next-auth-example.now.sh)
+# Validate Digital Public Goods App
 
-## About this project
+The [Digital Public Goods Alliance](https://digitalpublicgoods.net/) is now crowdsourcing reviews of digital public goods! We’re asking you to participate by reviewing open source projects against the [Digital Public Goods Standard](https://digitalpublicgoods.net/standard) with the ultimate goal of determining if a project qualifies as a Digital Public Good.
 
-This is an example of how to use [NextAuth.js](https://next-auth.js.org) library to add authentication to a [Next.js](https://nextjs.org) application.
+## 💡 Motivation
 
-## About NextAuth.js
+Open source represents an unprecedented opportunity to fundamentally alter power balances in international development. But, we can’t harness that power without the cooperation of many - reviewers, maintainers, creators, policy makers, and so many others (that means you! 👊).
 
-NextAuth.js is an easy to implement, full-stack (client/server) open source authentication library designed for [Next.js](https://nextjs.org) and [Serverless](https://now.sh).
+This community sourcing exercise will give you the opportunity to delve into some of the largest up and coming open source projects. You’ll get a chance to understand their licenses and documentation, and how they’re designing for best practices, standards, privacy and more.
 
-Go to [next-auth.js.org](https://next-auth.js.org) for more information and documentation.
+By participating, you’ll get a better understanding of open projects that are making a difference in the world, particularly those that are advancing practical solutions to help achieve the Sustainable Development Goals (SDGs). You’ll also join a growing number of innovators working on technology for development (T4D).
 
-*NextAuth.js is not associated with Vercel or Next.js.*
+## 🎮 App
 
-## Getting started
+The app is live at https://validate.digitalpublicgoods.net for anyone to contribute!
 
-### 1. Clone the repository and install dependancies
+## 💻 Development Environment
+
+### 1. Clone the repository and install dependencies
 
 ```
-git clone https://github.com/iaincollins/next-auth-example.git
-cd next-auth-example
+git clone https://github.com/lacabra/validate-digitalpublicgoods.git
+cd validate-digitalpublicgoods
 npm i
 ```
 
@@ -32,68 +34,9 @@ Copy the .env.local.example file in this directory to .env.local (which will be 
 cp .env.local.example .env.local
 ```
 
-Add details for one or more providers (e.g. Google, Twitter, GitHub, Email, etc).
+Add details for GitHub authentication.
 
-#### Database configuration
-
-A database is needed to persist user accounts and to support email sign in, but you can still use NextAuth.js for authentication without one by using OAuth for authentication. If you do not specify a database, JSON Web Tokens will be enabled by default.
-
-You can skip configuring a database and come back to it later if you want.
-
-When configuring your database you should also install an appropriate node_module.
-
-* **SQLite**
-
-  Install module:
-  `npm i sqlite3`
-
-  Database URI:
-  `sqlite://localhost/:memory:?synchronize=true`
-
-* **MySQL**
-
-  Install module:
-  `npm i mysql`
-
-  Database URI:
-  `mysql://username:password@127.0.0.1:3306/database_name?synchronize=true`
-
-* **Postgres**
-
-  Install module:
-  `npm i pg`
-
-  Database URI:
-  `postgres://username:password@127.0.0.1:5432/database_name?synchronize=true`
-
-* **MongoDB**
-
-  Install module:
-  `npm i mongodb`
-
-  Database URI:
-  `mongodb://username:password@127.0.0.1:27017/database_name?synchronize=true`
-
-Notes:
-
-* The example .env specifies an in-memory SQLite database that does not persist data.
-* SQLite is suitable for development / testing but not for production.
-* The option `?synchronize=true` automatically syncs schema changes to the database. It should not be used in production as may result in data loss if there are changes to the schema or to NextAuth.js
-* You can also specify a [TypeORM connection object](https://typeorm.io/#/connection-options) in `pages/api/auth/[...nextauth.js]` instead of a database URL / connection string.
-
-### 3. Configure authentication providers
-
-* Review and update options in `pages/api/auth/[...nextauth.js]` as needed.
-
-* When setting up OAUTH, in the developer admin page for each of your OAuth services, you should configure the callback URL to use a callback path of `{server}/api/auth/callback/{provider}`.
-
-  e.g. For Google OAuth you would use: `http://localhost:3000/api/auth/callback/google`
-
-  A list of configured providers and their callback URLs is available from the endpoint `/api/auth/providers`. You can find more information at https://next-auth.js.org/configuration/providers
-
-* You can also choose to specify an SMTP server for passwordless sign in via email.
-
-### 4. Start the application
+### 3. Start the application
 
 To run your site locally, use:
 
@@ -108,7 +51,7 @@ npm build
 npm start
 ```
 
-### 5. Configuring for production
+### 4. Configuring for production
 
 You must set the NEXTAUTH_URL environment variable with the URL of your site, before deploying to production.
 
@@ -120,3 +63,25 @@ To do this in on Vercel, you can use the [Vercel project dashboard](https://verc
 
 Be sure to also set environment variables for the Client ID and Client Secret values for all your authentication providers.
 
+## :memo: License
+
+This software is licensed under the [GNU General Public License](LICENSE) as published by the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+```
+    ProjectConnect App
+    Copyright (C) 2020 UNICEF
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+```
