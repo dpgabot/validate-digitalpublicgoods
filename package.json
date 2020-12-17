@@ -1,16 +1,19 @@
 {
-  "name": "next-auth-example",
-  "version": "3.1.0",
-  "description": "An example project for NextAuth.js",
-  "repository": "https://github.com/nextauthjs/next-auth-example.git",
-  "homepage": "http://next-auth-example.now.sh",
+  "name": "validate-digitalpublicgoods",
+  "version": "0.0.1",
+  "description": "Crowdsourcing the validation of Digital Public Goods",
+  "repository": "https://github.com/lacabra/validate-digitalpublicgoods.git",
+  "homepage": "https://validate.digitalpublicgoods.net",
   "main": "",
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|vue)\""
   },
-  "author": "Iain Collins <me@iaincollins.com>",
+  "author": "Victor Grau Serrat",
   "license": "ISC",
   "dependencies": {
     "@octokit/core": "^3.2.1",
@@ -24,5 +27,67 @@
     "react-cookie": "^4.0.3",
     "react-dom": "^16.13.1",
     "sqlite3": "^4.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.15.0",
+    "eslint-config-prettier": "^7.0.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-prettier": "^3.3.0",
+    "eslint-plugin-react": "^7.21.5",
+    "husky": "^4.3.6",
+    "lint-staged": "^10.5.3",
+    "prettier": "^2.2.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:react/recommended",
+      "prettier",
+      "plugin:prettier/recommended"
+    ],
+    "plugins": [
+      "prettier",
+      "react"
+    ],
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    },
+    "env": {
+      "browser": true,
+      "node": true,
+      "es6": true
+    },
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "ecmaVersion": 2018,
+      "sourceType": "module"
+    },
+    "rules": {
+      "react/prop-types": "off",
+      "react/react-in-jsx-scope": "off"
+    }
+  },
+  "prettier": {
+    "printWidth": 90,
+    "bracketSpacing": false,
+    "trailingComma": "es5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.+(js|jsx)": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.+(json|css|md)": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }

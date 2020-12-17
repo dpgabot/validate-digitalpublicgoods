@@ -1,12 +1,12 @@
-import { CookiesProvider } from "react-cookie";
-import { Provider } from 'next-auth/client'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
-import '../styles/global.css'
+import {CookiesProvider} from "react-cookie";
+import {Provider} from "next-auth/client";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css";
+import "../styles/global.css";
 
 // Use the <Provider> to improve performance and allow components that call
 // `useSession()` anywhere in your application to access the `session` object.
-export default function App ({ Component, pageProps }) {
+export default function App({Component, pageProps}) {
   return (
     <CookiesProvider>
       <Provider
@@ -25,11 +25,12 @@ export default function App ({ Component, pageProps }) {
           //
           // Note: If a session has expired when keep alive is triggered, all open
           // windows / tabs will be updated to reflect the user is signed out.
-          keepAlive: 0
+          keepAlive: 0,
         }}
-        session={pageProps.session} >
+        session={pageProps.session}
+      >
         <Component {...pageProps} />
       </Provider>
     </CookiesProvider>
-  )
+  );
 }

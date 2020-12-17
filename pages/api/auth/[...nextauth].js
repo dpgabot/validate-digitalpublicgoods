@@ -1,5 +1,5 @@
-import NextAuth from 'next-auth'
-import Providers from 'next-auth/providers'
+import NextAuth from "next-auth";
+import Providers from "next-auth/providers";
 
 // For more information on each option (and a full list of options) go to
 // https://next-auth.js.org/configuration/options
@@ -9,8 +9,8 @@ const options = {
     Providers.GitHub({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
-      scope: 'public_repo'
-    })
+      scope: "public_repo",
+    }),
   ],
   // Database optional. MySQL, Maria DB, Postgres and MongoDB are supported.
   // https://next-auth.js.org/configuration/database
@@ -45,11 +45,9 @@ const options = {
   // https://next-auth.js.org/configuration/options#jwt
   jwt: {
     // A secret to use for key generation (you should set this explicitly)
-    // secret: 'INp8IvdIyeMcoGAgFGoA61DdBglwwSqnXJZkgz8PSnw', 
-    
+    // secret: 'INp8IvdIyeMcoGAgFGoA61DdBglwwSqnXJZkgz8PSnw',
     // Set to true to use encryption (default: false)
     // encryption: true,
-
     // You can define your own encode/decode functions for signing and encryption
     // if you want to override the default behaviour.
     // encode: async ({ secret, token, maxAge }) => {},
@@ -70,28 +68,30 @@ const options = {
 
   // Callbacks are asynchronous functions you can use to control what happens
   // when an action is performed.
-  // https://next-auth.js.org/configuration/callbacks 
-  callbacks: { 
+  // https://next-auth.js.org/configuration/callbacks
+  callbacks: {
     // signIn: async (user, account, profile) => { return Promise.resolve(true) },
     // redirect: async (url, baseUrl) => { return Promise.resolve(baseUrl) },
-    session: async (session, user, sessionToken) => { 
-      session.accessToken = user.accessToken
-      session.ghUsername = user.ghUsername
-      return Promise.resolve(session) },
-    jwt: async (token, user, account, profile, isNewUser) => { 
-      if(account){
-        token.accessToken = account.accessToken
-        token.ghUsername = profile.login
+    session: async (session, user, sessionToken) => {
+      session.accessToken = user.accessToken;
+      session.ghUsername = user.ghUsername;
+      return Promise.resolve(session);
+    },
+    jwt: async (token, user, account, profile, isNewUser) => {
+      if (account) {
+        token.accessToken = account.accessToken;
+        token.ghUsername = profile.login;
       }
-      return Promise.resolve(token) }
+      return Promise.resolve(token);
+    },
   },
 
   // Events are useful for logging
   // https://next-auth.js.org/configuration/events
-  events: { },
+  events: {},
 
   // Enable debug messages in the console if you are having problems
   debug: false,
-}
+};
 
-export default (req, res) => NextAuth(req, res, options)
+export default (req, res) => NextAuth(req, res, options);
