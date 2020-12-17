@@ -74,3 +74,16 @@ blockquote {
 .selectedButton {
   box-shadow: 0 0 2px 3px blue;
 }
+
+.footeropensource {
+  display: block;
+  min-height: 2.5rem;
+  width: 100%;
+  opacity: 1;
+  overflow: hidden;
+  border-radius: 0.6rem 0.6rem 0 0;
+  padding: 0.6rem 1rem;
+  margin: 1rem 0 0 0;
+  background-color: rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease-in;
+}
