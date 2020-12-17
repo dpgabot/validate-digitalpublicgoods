@@ -108,7 +108,6 @@ export default function Projects () {
 											    </Container>
 										  	</Card>
 										))}
-									}
 								</CardColumns>
 							</>
 							: <div className='text-center pt-5 mt-5' style={{fontSize: '1.2em'}}>
