@@ -305,13 +305,13 @@ export default function Review(props) {
       rs.push(o);
     }
 
-    if (obj.ownership.isOwnershipExplicit === "Yes") {
+    if (obj.clearOwnership.isOwnershipExplicit === "Yes") {
       let owner = {
-        item: "ownership",
+        item: "clearOwnership",
         text: `The project owner for ${
           obj.name
         } claims that ownership of the project and everything that the project produces is clearly defined and documented, and provides ${thisLinkList(
-          obj.ownership.copyrightURL
+          obj.clearOwnership.copyrightURL
         )} as supporting evidence.`,
         question: `Does the evidence provided support the above claim?`,
       };
@@ -319,15 +319,15 @@ export default function Review(props) {
     }
 
     if (
-      obj.dependencies.mandatoryDepsCreateMoreRestrictions === "Yes" &&
-      obj.dependencies.isSoftwarePltIndependent === "Yes"
+      obj.platformIndependence.mandatoryDepsCreateMoreRestrictions === "Yes" &&
+      obj.platformIndependence.isSoftwarePltIndependent === "Yes"
     ) {
       let deps = {
-        item: "dependencies",
+        item: "platformIndependence",
         text: `The project owner for ${
           obj.name
         } claims that (a) despite the fact that this open project has mandatory dependencies (i.e. libraries, hardware) that create more restrictions than the original license, and (b) the open source components are able to demonstrate independence from the closed component(s) and/or there are functional, open alternatives. The project owner provides the following evidence to support this claim: <blockquote>${parseURLs(
-          obj.dependencies.pltIndependenceDesc
+          obj.platformIndependence.pltIndependenceDesc
         )}</blockquote>`,
         question: `Does the evidence provided support the above claim?`,
       };

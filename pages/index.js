@@ -93,7 +93,7 @@ export default function Page() {
             viewBox="0 0 16 16"
             version="1.1"
             width="16"
-            ariaHidden="true"
+            aria-hidden="true"
           >
             <path
               fillRule="evenodd"
