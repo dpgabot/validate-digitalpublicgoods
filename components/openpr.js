@@ -187,7 +187,7 @@ export default function Questions(props) {
     setStage2(DONE);
     setStage3(WAIT);
 
-    const filename = props.projectName + "-" + owner + ".json";
+    const filename = props.projectName + "_" + owner + ".json";
     let fileContent = JSON.parse(JSON.stringify(props.answer)); // deep copy object
     fileContent["user"] = owner;
     fileContent["timestamp"] = parseInt(Date.now() / 1000);
