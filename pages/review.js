@@ -391,7 +391,11 @@ export default function Review(props) {
           </>
         )}
         {!(counter < questions.length) && (
-          <OpenPR answer={result} projectName={props.submission.name} startTime={props.start_time}/>
+          <OpenPR
+            answer={result}
+            projectName={props.submission.name}
+            startTime={props.start_time}
+          />
         )}
       </Layout>
     );

@@ -42,7 +42,7 @@ export default function Projects() {
 
   function handleClick(submission) {
     setCurrentReview(submission);
-    setStartTime(Date.now()/1000);
+    setStartTime(Date.now() / 1000);
   }
 
   useEffect(() => {
@@ -82,7 +82,7 @@ export default function Projects() {
     );
   } else {
     if (currentReview) {
-      return <Review submission={currentReview} start_time={startTime}/>;
+      return <Review submission={currentReview} start_time={startTime} />;
     } else {
       return (
         <Layout>
@@ -90,7 +90,7 @@ export default function Projects() {
             submissions.length ? (
               <>
                 <p className="mt-5 mb-2">
-                  Please choose one of the projects below to review:
+                  Please choose one of the projects below to review: hello
                 </p>
                 <CardColumns>
                   {submissions.map((s) => (
