@@ -38,6 +38,7 @@ npm i
     ```
     NEXT_PUBLIC_GITHUB_OWNER="YOUR_GITHUB_USERNAME"
     NEXT_PUBLIC_GITHUB_REPO=publicgoods-candidates
+    NEXT_PUBLIC_GITHUB_MAIN=master
     ```
 
 3. Create your [GitHub OAuth App](https://docs.github.com/en/developers/apps/creating-an-oauth-app), with the following values:
