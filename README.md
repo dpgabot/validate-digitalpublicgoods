@@ -40,7 +40,12 @@ npm i
     NEXT_PUBLIC_GITHUB_REPO=publicgoods-candidates
     ```
 
-3. Create your [GitHub OAuth App](https://docs.github.com/en/developers/apps/creating-an-oauth-app), and set the following variables in `.env.local`:
+3. Create your [GitHub OAuth App](https://docs.github.com/en/developers/apps/creating-an-oauth-app), with the following values:
+    * Homepage URL: http://localhost:3000
+    * Authorization Callback URL: http://localhost:3000/api/auth/callback/github
+
+
+    and set the following variables in `.env.local`:
     ```
     GITHUB_ID=
     GITHUB_SECRET=
