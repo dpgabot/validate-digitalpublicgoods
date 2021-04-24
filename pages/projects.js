@@ -42,7 +42,7 @@ export default function Projects() {
 
   function handleClick(submission) {
     setCurrentReview(submission);
-    setStartTime(parseInt(Date.now() / 1000));
+    setStartTime(parseInt( Date.now() / 1000 ));
   }
 
   useEffect(() => {
