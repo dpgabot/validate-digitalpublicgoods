@@ -28,13 +28,23 @@ npm i
 
 ### 2. Configure your local environment
 
-Copy the .env.local.example file in this directory to .env.local (which will be ignored by Git):
+1. Copy the .env.local.example file in this directory to .env.local (which will be ignored by Git):
 
-```
-cp .env.local.example .env.local
-```
+    ```
+    cp .env.local.example .env.local
+    ```
 
-Add details for GitHub authentication.
+2. Clone [unicef/publicgoods-candidates](https://github.com/unicef/publicgoods-candidates) to your personal account and set the following variables in `.env.local`:
+    ```
+    NEXT_PUBLIC_GITHUB_OWNER="YOUR_GITHUB_USERNAME"
+    NEXT_PUBLIC_GITHUB_REPO=publicgoods-candidates
+    ```
+
+3. Create your [GitHub OAuth App](https://docs.github.com/en/developers/apps/creating-an-oauth-app), and set the following variables in `.env.local`:
+    ```
+    GITHUB_ID=
+    GITHUB_SECRET=
+    ```
 
 ### 3. Start the application
 
