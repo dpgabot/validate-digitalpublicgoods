@@ -12,7 +12,7 @@ export default function Questions(props) {
   const [answer, setAnswer] = useState(null);
   const [confidence, setConfidence] = useState(DEFAULT_CONFIDENCE);
   const [comment, setComment] = useState("");
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     // Only enable Previous button past the first question
@@ -44,7 +44,12 @@ export default function Questions(props) {
 
   function handleClick(next) {
     if (next && confidence === DEFAULT_CONFIDENCE) {
-      setError(true);
+      setError("error1");
+    }
+    // if it is the last question and the user hasn't typed at least one comment then set error when the user clicks next button
+    else if (next && props.counter == props.total && (props.count == 0 && comment.length == 0)) { 
+      setError("error2");   
+    }
     } else {
       let result = {answer: answer, comment: comment, confidence: confidence};
       props.onAnswer(result, next);
@@ -133,7 +138,7 @@ export default function Questions(props) {
         onChange={(changeEvent) => setConfidence(changeEvent.target.value)}
         tooltipLabel={(value) => sliderLabel(value)}
       />
-      <div className={error ? "alert-danger p-1" : "d-none"}>
+      <div className={error == "error1" ? "alert-danger p-1" : "d-none"}>
         Please choose a value for your degree of confidence.
       </div>
 
@@ -146,6 +151,10 @@ export default function Questions(props) {
           onChange={(changeEvent) => setComment(changeEvent.target.value)}
         />
       </Form.Group>
+      
+      <div className={error == "error2"? "alert-danger p-1" : "d-none"}>
+        Atleast one comment is required
+      </div>
 
       <Row className="pt-3">
         <Col xs={{span: 4, offset: 2}} className="text-center">
