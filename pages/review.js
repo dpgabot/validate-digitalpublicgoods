@@ -188,6 +188,16 @@ export default function Review(props) {
   const [question, setQuestion] = useState(null);
   const [questions, setQuestions] = useState(null);
   const [result, setResult] = useState({});
+  
+  function countComment() {
+   var number = 0;                    
+   Object.values(result).map(ans=> {  
+     if (ans.comment.length != 0) {
+       number++
+     }
+   })
+   return number;
+  }
 
   function handleAnswer(answer, next) {
     result[question.item] = answer;
@@ -387,6 +397,7 @@ export default function Review(props) {
               total={questions.length}
               onAnswer={handleAnswer}
               result={result[question.item] ? result[question.item] : null}
+              count = {countComment()}
             />
           </>
         )}
