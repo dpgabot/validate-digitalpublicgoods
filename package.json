@@ -11,7 +11,8 @@
     "start": "next start",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|vue)\""
+    "format": "prettier --check \"**/*.+(js|jsx|json|yml|yaml|css|vue)\"",
+    "format:fix": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|vue)\""
   },
   "author": "Victor Grau Serrat",
   "license": "ISC",
