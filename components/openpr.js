@@ -191,6 +191,7 @@ export default function Questions(props) {
     let fileContent = JSON.parse(JSON.stringify(props.answer)); // deep copy object
     fileContent["user"] = owner;
     fileContent["timestamp"] = parseInt(Date.now() / 1000);
+    fileContent["timeTaken"] = parseInt(Date.now() / 1000) - props.startTime;
     // Commit a file
     response = await octokit.request(
       `PUT /repos/{owner}/{repo}/contents/reviews/{filename}`,

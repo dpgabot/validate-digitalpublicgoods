@@ -20,6 +20,7 @@ export default function Projects() {
   const [submissions, setSubmissions] = useState(null);
   const [currentReview, setCurrentReview] = useState(null);
   const [cookies, setCookie] = useCookies(["projectsReviewed"]);
+  const [startTime, setStartTime] = useState(0);
 
   /**
    * Shuffles array in place. ES6 version
@@ -41,6 +42,7 @@ export default function Projects() {
 
   function handleClick(submission) {
     setCurrentReview(submission);
+    setStartTime(parseInt(Date.now() / 1000));
   }
 
   useEffect(() => {
@@ -80,7 +82,7 @@ export default function Projects() {
     );
   } else {
     if (currentReview) {
-      return <Review submission={currentReview} />;
+      return <Review submission={currentReview} startTime={startTime} />;
     } else {
       return (
         <Layout>
