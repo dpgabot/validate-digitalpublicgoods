@@ -5,7 +5,7 @@ import Layout from "../components/layout";
 import Questions from "../components/questions";
 import OpenPR from "../components/openpr";
 
-const MIN_LENGTH = 5;
+const MIN_LENGTH = 50;
 
 const SDGS = [
   "No Poverty",
