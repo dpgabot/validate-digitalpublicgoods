@@ -162,10 +162,10 @@ export default function Questions(props) {
       </div>
 
       <Row className="pt-3">
-        <Col xs={{span: 4, offset: 2}} className="text-center">
+        <Col xs={{span: 6, offset: 0}} md={{span: 4, offset: 2}} className="text-center">
           <Button
             className="actionButton"
-            style={{width: "200px"}}
+            style={{width: "100%"}}
             variant="secondary"
             onClick={(e) => handleClick(false)}
             disabled={!prev}
@@ -173,10 +173,10 @@ export default function Questions(props) {
             &lt;&lt; Previous
           </Button>
         </Col>
-        <Col xs={4} className="text-center">
+        <Col xs={6} md={4} className="text-center">
           <Button
             className="actionButton"
-            style={{width: "200px"}}
+            style={{width: "100%"}}
             variant="secondary"
             onClick={(e) => handleClick(true)}
             disabled={!next}
