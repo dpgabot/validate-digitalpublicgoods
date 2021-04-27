@@ -190,7 +190,6 @@ export default function Review(props) {
   const [question, setQuestion] = useState(null);
   const [questions, setQuestions] = useState(null);
   const [result, setResult] = useState({});
-  const minimum_length = 3;
 
   function countComment() {
     // function to get number of meaningful comments
