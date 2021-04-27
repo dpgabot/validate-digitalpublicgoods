@@ -4,6 +4,7 @@ import RangeSlider from "react-bootstrap-range-slider";
 
 const DEFAULT_CONFIDENCE = 3;
 const DEFAULT_RESULT = {answer: null, comment: "", confidence: DEFAULT_CONFIDENCE};
+const MIN_LENGTH = 5;
 
 export default function Questions(props) {
   const [prev, setPrev] = useState(false);
@@ -47,9 +48,13 @@ export default function Questions(props) {
       setError("error1");
     }
     // if it is the last question and the user hasn't typed at least one comment then set error when the user clicks next button
-    else if (next && props.counter == props.total && (props.count == 0 && comment.length == 0)) { 
-      setError("error2");   
-    }
+    else if (
+      next &&
+      props.counter == props.total &&
+      props.count == 0 &&
+      comment.length < MIN_LENGTH
+    ) {
+      setError("error2");
     } else {
       let result = {answer: answer, comment: comment, confidence: confidence};
       props.onAnswer(result, next);
@@ -151,8 +156,8 @@ export default function Questions(props) {
           onChange={(changeEvent) => setComment(changeEvent.target.value)}
         />
       </Form.Group>
-      
-      <div className={error == "error2"? "alert-danger p-1" : "d-none"}>
+
+      <div className={error == "error2" ? "alert-danger p-1" : "d-none"}>
         Atleast one comment is required
       </div>
 
