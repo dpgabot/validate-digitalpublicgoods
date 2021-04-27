@@ -394,7 +394,7 @@ export default function Review(props) {
           <OpenPR
             answer={result}
             projectName={props.submission.name}
-            startTime={props.start_time}
+            startTime={props.startTime}
           />
         )}
       </Layout>

@@ -42,7 +42,7 @@ export default function Projects() {
 
   function handleClick(submission) {
     setCurrentReview(submission);
-    setStartTime(parseInt( Date.now() / 1000 ));
+    setStartTime(parseInt(Date.now() / 1000));
   }
 
   useEffect(() => {
@@ -82,7 +82,7 @@ export default function Projects() {
     );
   } else {
     if (currentReview) {
-      return <Review submission={currentReview} start_time={startTime} />;
+      return <Review submission={currentReview} startTime={startTime} />;
     } else {
       return (
         <Layout>
