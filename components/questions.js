@@ -159,7 +159,7 @@ export default function Questions(props) {
             &lt;&lt; Previous
           </Button>
         </Col>
-        <Col xs={6} md = {4} className="text-center">
+        <Col xs={6} md={4} className="text-center">
           <Button
             className="actionButton"
             style={{width: "100%"}}
