@@ -4,7 +4,7 @@ import RangeSlider from "react-bootstrap-range-slider";
 
 const DEFAULT_CONFIDENCE = 3;
 const DEFAULT_RESULT = {answer: null, comment: "", confidence: DEFAULT_CONFIDENCE};
-const MIN_LENGTH = 5;
+const MIN_LENGTH = 50;
 
 export default function Questions(props) {
   const [prev, setPrev] = useState(false);
@@ -13,7 +13,7 @@ export default function Questions(props) {
   const [answer, setAnswer] = useState(null);
   const [confidence, setConfidence] = useState(DEFAULT_CONFIDENCE);
   const [comment, setComment] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     // Only enable Previous button past the first question
@@ -45,7 +45,7 @@ export default function Questions(props) {
 
   function handleClick(next) {
     if (next && confidence === DEFAULT_CONFIDENCE) {
-      setError("error1");
+      setError("noConfidence");
     }
     // if it is the last question and the user hasn't typed at least one comment then set error when the user clicks next button
     else if (
@@ -54,7 +54,7 @@ export default function Questions(props) {
       props.count == 0 &&
       comment.length < MIN_LENGTH
     ) {
-      setError("error2");
+      setError("noComment");
     } else {
       let result = {answer: answer, comment: comment, confidence: confidence};
       props.onAnswer(result, next);
@@ -143,7 +143,7 @@ export default function Questions(props) {
         onChange={(changeEvent) => setConfidence(changeEvent.target.value)}
         tooltipLabel={(value) => sliderLabel(value)}
       />
-      <div className={error == "error1" ? "alert-danger p-1" : "d-none"}>
+      <div className={error == "noConfidence" ? "alert-danger p-1" : "d-none"}>
         Please choose a value for your degree of confidence.
       </div>
 
@@ -157,8 +157,8 @@ export default function Questions(props) {
         />
       </Form.Group>
 
-      <div className={error == "error2" ? "alert-danger p-1" : "d-none"}>
-        Atleast one comment is required
+      <div className={error == "noComment" ? "alert-danger p-1" : "d-none"}>
+        Atleast one meaningful comment is required
       </div>
 
       <Row className="pt-3">
