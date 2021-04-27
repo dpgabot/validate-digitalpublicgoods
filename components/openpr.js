@@ -323,7 +323,11 @@ export default function Questions(props) {
       <p>
         The final step in this process is to submit your work. Once you click the submit
         button below a pull request will be automatically opened in{" "}
-        <a href="https://github.com/{refOwner}/{repo}" target="_blank" rel="noreferrer">
+        <a
+          href={`https://github.com/${refOwner}/${repo}`}
+          target="_blank"
+          rel="noreferrer"
+        >
           this repository
         </a>
         .
