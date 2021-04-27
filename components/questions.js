@@ -158,7 +158,7 @@ export default function Questions(props) {
       </Form.Group>
 
       <div className={error == "noComment" ? "alert-danger p-1" : "d-none"}>
-        Atleast one meaningful comment is required
+        At least one meaningful comment is required
       </div>
 
       <Row className="pt-3">
