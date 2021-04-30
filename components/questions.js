@@ -159,35 +159,41 @@ export default function Questions(props) {
       </Form.Group>
 
       {!summaryMode && (
-      <div className={error == "noComment" ? "alert-danger p-1" : "d-none"}>
-        At least one meaningful comment is required
-      </div>
+        <>
+          <div className={error == "noComment" ? "alert-danger p-1" : "d-none"}>
+            At least one meaningful comment is required
+          </div>
 
-      <Row className="pt-3">
-        <Col xs={{span: 6, offset: 0}} md={{span: 4, offset: 2}} className="text-center">
-          <Button
-            className="actionButton"
-            style={{width: "100%"}}
-            variant="secondary"
-            onClick={(e) => handleClick(false)}
-            disabled={!prev}
-          >
-            &lt;&lt; Previous
-          </Button>
-        </Col>
-
-          <Col xs={6} md={4} className="text-center">
-            <Button
-              className="actionButton"
-              style={{width: "100%"}}
-              variant="secondary"
-              onClick={(e) => handleClick(true)}
-              disabled={!next}
+          <Row className="pt-3">
+            <Col
+              xs={{span: 6, offset: 0}}
+              md={{span: 4, offset: 2}}
+              className="text-center"
             >
-              Next &gt;&gt;
-            </Button>
-          </Col>
-        </Row>
+              <Button
+                className="actionButton"
+                style={{width: "100%"}}
+                variant="secondary"
+                onClick={(e) => handleClick(false)}
+                disabled={!prev}
+              >
+                &lt;&lt; Previous
+              </Button>
+            </Col>
+
+            <Col xs={6} md={4} className="text-center">
+              <Button
+                className="actionButton"
+                style={{width: "100%"}}
+                variant="secondary"
+                onClick={(e) => handleClick(true)}
+                disabled={!next}
+              >
+                Next &gt;&gt;
+              </Button>
+            </Col>
+          </Row>
+        </>
       )}
     </div>
   );
