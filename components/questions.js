@@ -4,6 +4,7 @@ import RangeSlider from "react-bootstrap-range-slider";
 
 const DEFAULT_CONFIDENCE = 3;
 const DEFAULT_RESULT = {answer: null, comment: "", confidence: DEFAULT_CONFIDENCE};
+const MIN_LENGTH = 50;
 
 export default function Questions(props) {
   const [prev, setPrev] = useState(false);
@@ -45,7 +46,16 @@ export default function Questions(props) {
 
   function handleClick(next) {
     if (next && confidence === DEFAULT_CONFIDENCE) {
-      setError(true);
+      setError("noConfidence");
+    }
+    // if it is the last question and the user hasn't typed at least one comment then set error when the user clicks next button
+    else if (
+      next &&
+      props.counter == props.total &&
+      props.count == 0 &&
+      comment.length < MIN_LENGTH
+    ) {
+      setError("noComment");
     } else {
       let result = {answer: answer, comment: comment, confidence: confidence};
       props.onAnswer(result, next);
@@ -134,7 +144,7 @@ export default function Questions(props) {
         onChange={(changeEvent) => setConfidence(changeEvent.target.value)}
         tooltipLabel={(value) => sliderLabel(value)}
       />
-      <div className={error ? "alert-danger p-1" : "d-none"}>
+      <div className={error == "noConfidence" ? "alert-danger p-1" : "d-none"}>
         Please choose a value for your degree of confidence.
       </div>
 
@@ -149,22 +159,23 @@ export default function Questions(props) {
       </Form.Group>
 
       {!summaryMode && (
-        <Row className="pt-3">
-          <Col
-            xs={{span: 6, offset: 0}}
-            md={{span: 4, offset: 2}}
-            className="text-center"
+      <div className={error == "noComment" ? "alert-danger p-1" : "d-none"}>
+        At least one meaningful comment is required
+      </div>
+
+      <Row className="pt-3">
+        <Col xs={{span: 6, offset: 0}} md={{span: 4, offset: 2}} className="text-center">
+          <Button
+            className="actionButton"
+            style={{width: "100%"}}
+            variant="secondary"
+            onClick={(e) => handleClick(false)}
+            disabled={!prev}
           >
-            <Button
-              className="actionButton"
-              style={{width: "100%"}}
-              variant="secondary"
-              onClick={(e) => handleClick(false)}
-              disabled={!prev}
-            >
-              &lt;&lt; Previous
-            </Button>
-          </Col>
+            &lt;&lt; Previous
+          </Button>
+        </Col>
+
           <Col xs={6} md={4} className="text-center">
             <Button
               className="actionButton"

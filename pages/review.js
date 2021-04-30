@@ -6,6 +6,8 @@ import Questions from "../components/questions";
 import Summary from "../components/summary";
 import OpenPR from "../components/openpr";
 
+const MIN_LENGTH = 50;
+
 const SDGS = [
   "No Poverty",
   "Zero Hunger",
@@ -189,6 +191,17 @@ export default function Review(props) {
   const [question, setQuestion] = useState(null);
   const [questions, setQuestions] = useState(null);
   const [result, setResult] = useState({});
+
+  function countComment() {
+    // function to get number of meaningful comments
+    var number = 0;
+    Object.values(result).map((ans) => {
+      if (ans.comment.length >= MIN_LENGTH) {
+        number++;
+      }
+    });
+    return number;
+  }
 
   function handleAnswer(answer, next) {
     result[question.item] = answer;
@@ -393,6 +406,7 @@ export default function Review(props) {
               onAnswer={handleAnswer}
               mode={false}
               result={result[question.item] ? result[question.item] : null}
+              count={countComment()}
             />
           </>
         )}
