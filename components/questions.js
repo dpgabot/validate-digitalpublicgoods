@@ -13,6 +13,7 @@ export default function Questions(props) {
   const [confidence, setConfidence] = useState(DEFAULT_CONFIDENCE);
   const [comment, setComment] = useState("");
   const [error, setError] = useState(false);
+  const [summaryMode, setSummaryMode] = useState(props.mode);
 
   useEffect(() => {
     // Only enable Previous button past the first question
@@ -147,30 +148,36 @@ export default function Questions(props) {
         />
       </Form.Group>
 
-      <Row className="pt-3">
-        <Col xs={{span: 6, offset: 0}} md={{span: 4, offset: 2}} className="text-center">
-          <Button
-            className="actionButton"
-            style={{width: "100%"}}
-            variant="secondary"
-            onClick={(e) => handleClick(false)}
-            disabled={!prev}
+      {!summaryMode && (
+        <Row className="pt-3">
+          <Col
+            xs={{span: 6, offset: 0}}
+            md={{span: 4, offset: 2}}
+            className="text-center"
           >
-            &lt;&lt; Previous
-          </Button>
-        </Col>
-        <Col xs={6} md={4} className="text-center">
-          <Button
-            className="actionButton"
-            style={{width: "100%"}}
-            variant="secondary"
-            onClick={(e) => handleClick(true)}
-            disabled={!next}
-          >
-            Next &gt;&gt;
-          </Button>
-        </Col>
-      </Row>
+            <Button
+              className="actionButton"
+              style={{width: "100%"}}
+              variant="secondary"
+              onClick={(e) => handleClick(false)}
+              disabled={!prev}
+            >
+              &lt;&lt; Previous
+            </Button>
+          </Col>
+          <Col xs={6} md={4} className="text-center">
+            <Button
+              className="actionButton"
+              style={{width: "100%"}}
+              variant="secondary"
+              onClick={(e) => handleClick(true)}
+              disabled={!next}
+            >
+              Next &gt;&gt;
+            </Button>
+          </Col>
+        </Row>
+      )}
     </div>
   );
 }

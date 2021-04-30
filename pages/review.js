@@ -207,7 +207,9 @@ export default function Review(props) {
     }
   }
 
-  function handleConfirm() {}
+  function handleConfirm() {
+    setCounter(counter + 1);
+  }
 
   function thisLink(text) {
     let output;
@@ -389,12 +391,13 @@ export default function Review(props) {
               counter={counter + 1}
               total={questions.length}
               onAnswer={handleAnswer}
+              mode={false}
               result={result[question.item] ? result[question.item] : null}
             />
           </>
         )}
 
-        {!(counter < questions.length) && (
+        {counter == questions.length && (
           <>
             <Alert variant="info" className="text-center mt-3">
               You are reviewing{" "}
@@ -406,7 +409,10 @@ export default function Review(props) {
             {questions.map((object, index) => (
               <Summary
                 key={index}
+                index={index}
                 question={questions[index]}
+                total={questions.length}
+                onAnswer={handleAnswer}
                 result={result[questions[index].item]}
               />
             ))}
@@ -422,8 +428,7 @@ export default function Review(props) {
             </div>
           </>
         )}
-
-        {counter > questions.length + 1 && (
+        {counter >= questions.length + 1 && (
           <OpenPR
             answer={result}
             projectName={props.submission.name}
