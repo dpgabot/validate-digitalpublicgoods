@@ -3,6 +3,7 @@ import {signIn, signOut, useSession} from "next-auth/client";
 import {Button, Spinner, Alert} from "react-bootstrap";
 import Layout from "../components/layout";
 import Questions from "../components/questions";
+import Summary from "../components/summary";
 import OpenPR from "../components/openpr";
 
 const SDGS = [
@@ -206,6 +207,8 @@ export default function Review(props) {
     }
   }
 
+  function handleConfirm() {}
+
   function thisLink(text) {
     let output;
     if (text) {
@@ -390,7 +393,37 @@ export default function Review(props) {
             />
           </>
         )}
+
         {!(counter < questions.length) && (
+          <>
+            <Alert variant="info" className="text-center mt-3">
+              You are reviewing{" "}
+              <a href={props.submission.website} target="_blank" rel="noreferrer">
+                {props.submission.name}
+              </a>
+            </Alert>
+            <h4 className="text-center pt-1 pb-3">This is what we got from you!</h4>
+            {questions.map((object, index) => (
+              <Summary
+                key={index}
+                question={questions[index]}
+                result={result[questions[index].item]}
+              />
+            ))}
+            <div className="text-center pb-3">
+              <Button
+                className="actionButton"
+                style={{width: "80px"}}
+                variant="primary"
+                onClick={(e) => handleConfirm()}
+              >
+                Confirm
+              </Button>
+            </div>
+          </>
+        )}
+
+        {counter > questions.length + 1 && (
           <OpenPR
             answer={result}
             projectName={props.submission.name}
