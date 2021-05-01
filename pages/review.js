@@ -220,6 +220,11 @@ export default function Review(props) {
     }
   }
 
+  function handleSummary(answer, index) {
+    result[questions[index].item] = answer;
+    setResult(result);
+  }
+
   function handleConfirm() {
     setCounter(counter + 1);
   }
@@ -426,7 +431,7 @@ export default function Review(props) {
                 index={index}
                 question={questions[index]}
                 total={questions.length}
-                onAnswer={handleAnswer}
+                onSummaryModify={handleSummary}
                 result={result[questions[index].item]}
               />
             ))}

@@ -68,6 +68,18 @@ export default function Questions(props) {
     }
   }
 
+  function handleDone() {
+    let res = {answer: answer, comment: comment, confidence: confidence};
+    props.onModify(res);
+    setConfidence(DEFAULT_CONFIDENCE);
+    setComment("");
+    setAnswer(null);
+    setNext(false);
+    setError(false);
+    setResult(DEFAULT_RESULT);
+    setSummaryMode(false);
+  }
+
   function sliderLabel(value) {
     let label;
     switch (parseInt(value)) {
@@ -194,6 +206,18 @@ export default function Questions(props) {
             </Col>
           </Row>
         </>
+      )}
+      {summaryMode && (
+        <div className="mb-5">
+          <Button
+            className="actionButton"
+            style={{width: "25%"}}
+            variant="primary"
+            onClick={(e) => handleDone()}
+          >
+            Done
+          </Button>
+        </div>
       )}
     </div>
   );
