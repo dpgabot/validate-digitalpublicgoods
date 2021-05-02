@@ -69,15 +69,28 @@ export default function Questions(props) {
   }
 
   function handleDone() {
-    let res = {answer: answer, comment: comment, confidence: confidence};
-    props.onModify(res);
-    setConfidence(DEFAULT_CONFIDENCE);
-    setComment("");
-    setAnswer(null);
-    setNext(false);
-    setError(false);
-    setResult(DEFAULT_RESULT);
-    setSummaryMode(false);
+    if (confidence === DEFAULT_CONFIDENCE) {
+      setError("noConfidence");
+      console.log("Set error");
+    }
+    // if it is the last question and the user hasn't typed at least one comment then set error when the user clicks next button
+    else if (
+      props.counter == props.total &&
+      props.count == 0 &&
+      comment.length < MIN_LENGTH
+    ) {
+      setError("noComment");
+    } else {
+      let res = {answer: answer, comment: comment, confidence: confidence};
+      props.onModify(res);
+      setConfidence(DEFAULT_CONFIDENCE);
+      setComment("");
+      setAnswer(null);
+      setNext(false);
+      setError(false);
+      setResult(DEFAULT_RESULT);
+      setSummaryMode(false);
+    }
   }
 
   function sliderLabel(value) {
@@ -153,9 +166,10 @@ export default function Questions(props) {
         min={1}
         max={5}
         step={1}
-        onChange={(changeEvent) => setConfidence(changeEvent.target.value)}
+        onChange={(changeEvent) => setConfidence(parseInt(changeEvent.target.value, 10))}
         tooltipLabel={(value) => sliderLabel(value)}
       />
+
       <div className={error == "noConfidence" ? "alert-danger p-1" : "d-none"}>
         Please choose a value for your degree of confidence.
       </div>
@@ -170,12 +184,12 @@ export default function Questions(props) {
         />
       </Form.Group>
 
+      <div className={error == "noComment" ? "alert-danger p-1" : "d-none"}>
+        At least one meaningful comment is required
+      </div>
+
       {!summaryMode && (
         <>
-          <div className={error == "noComment" ? "alert-danger p-1" : "d-none"}>
-            At least one meaningful comment is required
-          </div>
-
           <Row className="pt-3">
             <Col
               xs={{span: 6, offset: 0}}
