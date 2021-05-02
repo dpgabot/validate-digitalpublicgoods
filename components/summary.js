@@ -39,8 +39,16 @@ export default function Summary(props) {
               </thead>
               <tbody>
                 <tr>
-                  {result.answer && <td width="25%">Yes</td>}
-                  {!result.answer && <td width="25%">No</td>}
+                  {result.answer && (
+                    <td width="25%" style={{color: "green"}}>
+                      YES
+                    </td>
+                  )}
+                  {!result.answer && (
+                    <td width="25%" style={{color: "red"}}>
+                      NO
+                    </td>
+                  )}
                   {result.confidence == 1 && <td>Not at all confident</td>}
                   {result.confidence == 2 && <td>Somewhat not confident</td>}
                   {result.confidence == 4 && <td>Confident</td>}
