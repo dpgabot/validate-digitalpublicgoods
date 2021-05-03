@@ -14,6 +14,7 @@ export default function Questions(props) {
   const [confidence, setConfidence] = useState(DEFAULT_CONFIDENCE);
   const [comment, setComment] = useState("");
   const [error, setError] = useState(false);
+  const [summaryMode, setSummaryMode] = useState(props.mode);
 
   useEffect(() => {
     // Only enable Previous button past the first question
@@ -64,6 +65,31 @@ export default function Questions(props) {
       setNext(false);
       setError(false);
       setResult(DEFAULT_RESULT);
+    }
+  }
+
+  function handleDone() {
+    if (confidence === DEFAULT_CONFIDENCE) {
+      setError("noConfidence");
+      console.log("Set error");
+    }
+    // if it is the last question and the user hasn't typed at least one comment then set error when the user clicks next button
+    else if (
+      props.counter == props.total &&
+      props.count == 0 &&
+      comment.length < MIN_LENGTH
+    ) {
+      setError("noComment");
+    } else {
+      let res = {answer: answer, comment: comment, confidence: confidence};
+      props.onModify(res);
+      setConfidence(DEFAULT_CONFIDENCE);
+      setComment("");
+      setAnswer(null);
+      setNext(false);
+      setError(false);
+      setResult(DEFAULT_RESULT);
+      setSummaryMode(false);
     }
   }
 
@@ -140,9 +166,10 @@ export default function Questions(props) {
         min={1}
         max={5}
         step={1}
-        onChange={(changeEvent) => setConfidence(changeEvent.target.value)}
+        onChange={(changeEvent) => setConfidence(parseInt(changeEvent.target.value, 10))}
         tooltipLabel={(value) => sliderLabel(value)}
       />
+
       <div className={error == "noConfidence" ? "alert-danger p-1" : "d-none"}>
         Please choose a value for your degree of confidence.
       </div>
@@ -161,30 +188,51 @@ export default function Questions(props) {
         At least one meaningful comment is required
       </div>
 
-      <Row className="pt-3">
-        <Col xs={{span: 6, offset: 0}} md={{span: 4, offset: 2}} className="text-center">
+      {!summaryMode && (
+        <>
+          <Row className="pt-3">
+            <Col
+              xs={{span: 6, offset: 0}}
+              md={{span: 4, offset: 2}}
+              className="text-center"
+            >
+              <Button
+                className="actionButton"
+                style={{width: "100%"}}
+                variant="secondary"
+                onClick={(e) => handleClick(false)}
+                disabled={!prev}
+              >
+                &lt;&lt; Previous
+              </Button>
+            </Col>
+
+            <Col xs={6} md={4} className="text-center">
+              <Button
+                className="actionButton"
+                style={{width: "100%"}}
+                variant="secondary"
+                onClick={(e) => handleClick(true)}
+                disabled={!next}
+              >
+                Next &gt;&gt;
+              </Button>
+            </Col>
+          </Row>
+        </>
+      )}
+      {summaryMode && (
+        <div className="mb-5">
           <Button
             className="actionButton"
-            style={{width: "100%"}}
-            variant="secondary"
-            onClick={(e) => handleClick(false)}
-            disabled={!prev}
+            style={{width: "25%"}}
+            variant="primary"
+            onClick={(e) => handleDone()}
           >
-            &lt;&lt; Previous
+            Done
           </Button>
-        </Col>
-        <Col xs={6} md={4} className="text-center">
-          <Button
-            className="actionButton"
-            style={{width: "100%"}}
-            variant="secondary"
-            onClick={(e) => handleClick(true)}
-            disabled={!next}
-          >
-            Next &gt;&gt;
-          </Button>
-        </Col>
-      </Row>
+        </div>
+      )}
     </div>
   );
 }

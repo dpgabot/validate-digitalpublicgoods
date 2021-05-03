@@ -3,6 +3,7 @@ import {signIn, signOut, useSession} from "next-auth/client";
 import {Button, Spinner, Alert} from "react-bootstrap";
 import Layout from "../components/layout";
 import Questions from "../components/questions";
+import Summary from "../components/summary";
 import OpenPR from "../components/openpr";
 
 const MIN_LENGTH = 50;
@@ -185,11 +186,11 @@ const licenses = {
 
 export default function Review(props) {
   const [session, loading] = useSession();
-
   const [counter, setCounter] = useState(0);
   const [question, setQuestion] = useState(null);
   const [questions, setQuestions] = useState(null);
   const [result, setResult] = useState({});
+  const [summaryMode, setSummaryMode] = useState(true);
 
   function countComment() {
     // function to get number of meaningful comments
@@ -217,6 +218,15 @@ export default function Review(props) {
         setCounter(counter - 1);
       }
     }
+  }
+
+  function handleSummary(answer, index) {
+    result[questions[index].item] = answer;
+    setResult(result);
+  }
+
+  function handleConfirm() {
+    setSummaryMode(false);
   }
 
   function thisLink(text) {
@@ -399,12 +409,45 @@ export default function Review(props) {
               counter={counter + 1}
               total={questions.length}
               onAnswer={handleAnswer}
+              mode={false}
               result={result[question.item] ? result[question.item] : null}
               count={countComment()}
             />
           </>
         )}
-        {!(counter < questions.length) && (
+
+        {counter == questions.length && summaryMode && (
+          <>
+            <Alert variant="info" className="text-center mt-3">
+              You are reviewing{" "}
+              <a href={props.submission.website} target="_blank" rel="noreferrer">
+                {props.submission.name}
+              </a>
+            </Alert>
+            <h4 className="text-center pt-1 pb-3">This is what we got from you!</h4>
+            {questions.map((object, index) => (
+              <Summary
+                key={index}
+                index={index}
+                question={questions[index]}
+                total={questions.length}
+                onSummaryModify={handleSummary}
+                result={result[questions[index].item]}
+              />
+            ))}
+            <div className="text-center pb-3">
+              <Button
+                className="actionButton"
+                style={{width: "80px"}}
+                variant="primary"
+                onClick={(e) => handleConfirm()}
+              >
+                Confirm
+              </Button>
+            </div>
+          </>
+        )}
+        {counter == questions.length && !summaryMode && (
           <OpenPR
             answer={result}
             projectName={props.submission.name}
