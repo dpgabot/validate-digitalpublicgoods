@@ -186,11 +186,11 @@ const licenses = {
 
 export default function Review(props) {
   const [session, loading] = useSession();
-
   const [counter, setCounter] = useState(0);
   const [question, setQuestion] = useState(null);
   const [questions, setQuestions] = useState(null);
   const [result, setResult] = useState({});
+  const [summaryMode, setSummaryMode] = useState(true);
 
   function countComment() {
     // function to get number of meaningful comments
@@ -226,7 +226,7 @@ export default function Review(props) {
   }
 
   function handleConfirm() {
-    setCounter(counter + 1);
+    setSummaryMode(false);
   }
 
   function thisLink(text) {
@@ -416,7 +416,7 @@ export default function Review(props) {
           </>
         )}
 
-        {counter == questions.length && (
+        {counter == questions.length && summaryMode && (
           <>
             <Alert variant="info" className="text-center mt-3">
               You are reviewing{" "}
@@ -447,7 +447,7 @@ export default function Review(props) {
             </div>
           </>
         )}
-        {counter >= questions.length + 1 && (
+        {counter == questions.length && !summaryMode && (
           <OpenPR
             answer={result}
             projectName={props.submission.name}
