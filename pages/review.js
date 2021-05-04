@@ -192,13 +192,15 @@ export default function Review(props) {
   const [result, setResult] = useState({});
   const [summaryMode, setSummaryMode] = useState(true);
 
-  function countComment() {
+  function countComment(index) {
     // function to get number of meaningful comments
     var number = 0;
+    var i = 0;
     Object.values(result).map((ans) => {
-      if (ans.comment.length >= MIN_LENGTH) {
+      if (i != index && ans.comment.length >= MIN_LENGTH) {
         number++;
       }
+      i++;
     });
     return number;
   }
@@ -433,6 +435,8 @@ export default function Review(props) {
                 total={questions.length}
                 onSummaryModify={handleSummary}
                 result={result[questions[index].item]}
+                allResults={result}
+                count={countComment}
               />
             ))}
             <div className="text-center pb-3">
