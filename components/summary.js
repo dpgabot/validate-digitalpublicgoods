@@ -16,19 +16,6 @@ export default function Summary(props) {
     setModify(false);
   }
 
-  function countComment() {
-    // function to get number of meaningful comments other than the current question
-    var countValue = 0;
-    var i = 0;
-    Object.values(props.allResults).map((ans) => {
-      if (i != props.index && ans.comment.length >= MIN_LENGTH) {
-        number++;
-      }
-      i++;
-    });
-    return countValue;
-  }
-
   return (
     <div className="mt-3 mb-3 pl-4 pr-4">
       {!modify && (
