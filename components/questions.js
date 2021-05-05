@@ -71,14 +71,9 @@ export default function Questions(props) {
   function handleDone() {
     if (confidence === DEFAULT_CONFIDENCE) {
       setError("noConfidence");
-      console.log("Set error");
     }
-    // if it is the last question and the user hasn't typed at least one comment then set error when the user clicks next button
-    else if (
-      props.counter == props.total &&
-      props.count == 0 &&
-      comment.length < MIN_LENGTH
-    ) {
+    // if the user hasn't typed at least one comment then set error when the user clicks done button
+    else if (props.count(props.counter - 1) == 0 && comment.length < MIN_LENGTH) {
       setError("noComment");
     } else {
       let res = {answer: answer, comment: comment, confidence: confidence};
@@ -184,7 +179,7 @@ export default function Questions(props) {
         />
       </Form.Group>
 
-      <div className={error == "noComment" ? "alert-danger p-1" : "d-none"}>
+      <div className={error == "noComment" ? "alert-danger p-1 mb-3" : "d-none"}>
         At least one meaningful comment is required
       </div>
 

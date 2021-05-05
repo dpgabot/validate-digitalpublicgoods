@@ -79,6 +79,7 @@ export default function Summary(props) {
             onModify={handleModification}
             mode={true}
             result={result}
+            count={props.count}
           />
         </>
       )}
