@@ -52,7 +52,7 @@ export default function Projects() {
 
     async function fetchData() {
       let array = [];
-      const result = await fetch(`${GITHUBAPI}contents/screening`);
+      const result = await fetch(`${GITHUBAPI}contents/digitalpublicgoods`);
       const items = await result.json();
       for (let i = 0; i < items.length; i++) {
         if (items[i].size > 50) {
@@ -60,7 +60,10 @@ export default function Projects() {
           const submission = await response1.json();
           const response2 = await fetch(GITHUBRAW + "nominees/" + items[i].name);
           const nominee = await response2.json();
-          if (!cookies.projectsReviewed.includes(submission["name"])) {
+          if (
+            !cookies.projectsReviewed ||
+            !cookies.projectsReviewed.includes(submission["name"])
+          ) {
             array.push(Object.assign({}, nominee, submission));
           }
         }
