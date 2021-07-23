@@ -30,27 +30,29 @@ npm i
 
 1. Copy the .env.local.example file in this directory to .env.local (which will be ignored by Git):
 
-    ```
-    cp .env.local.example .env.local
-    ```
+   ```
+   cp .env.local.example .env.local
+   ```
 
 2. Clone [unicef/publicgoods-candidates](https://github.com/unicef/publicgoods-candidates) to your personal account and set the following variables in `.env.local`:
-    ```
-    NEXT_PUBLIC_GITHUB_OWNER="YOUR_GITHUB_USERNAME"
-    NEXT_PUBLIC_GITHUB_REPO=publicgoods-candidates
-    NEXT_PUBLIC_GITHUB_MAIN=master
-    ```
+
+   ```
+   NEXT_PUBLIC_GITHUB_OWNER="YOUR_GITHUB_USERNAME"
+   NEXT_PUBLIC_GITHUB_REPO=publicgoods-candidates
+   NEXT_PUBLIC_GITHUB_MAIN=master
+   ```
 
 3. Create your [GitHub OAuth App](https://docs.github.com/en/developers/apps/creating-an-oauth-app), with the following values:
-    * Homepage URL: http://localhost:3000
-    * Authorization Callback URL: http://localhost:3000/api/auth/callback/github
 
+   - Homepage URL: http://localhost:3000
+   - Authorization Callback URL: http://localhost:3000/api/auth/callback/github
 
-    and set the following variables in `.env.local`:
-    ```
-    GITHUB_ID=
-    GITHUB_SECRET=
-    ```
+   and set the following variables in `.env.local`:
+
+   ```
+   GITHUB_ID=
+   GITHUB_SECRET=
+   ```
 
 ### 3. Start the application
 
@@ -81,23 +83,14 @@ Be sure to also set environment variables for the Client ID and Client Secret va
 
 ## :memo: License
 
-This software is licensed under the [GNU General Public License](LICENSE) as published by the Free Software Foundation, either version 3 of the License, or
-any later version.
+This software is licensed under the [MIT License](LICENSE):
 
 ```
-    ProjectConnect App
-    Copyright (C) 2020 UNICEF
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 ```
