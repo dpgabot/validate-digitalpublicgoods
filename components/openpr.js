@@ -82,9 +82,15 @@ export default function Questions(props) {
   const [pageTitle, setPageTitle] = useState("You are almost done!");
   const [cookies, setCookie] = useCookies(["projectsReviewed"]);
 
-  const refOwner = process.env.NEXT_PUBLIC_GITHUB_OWNER;
-  const repo = process.env.NEXT_PUBLIC_GITHUB_REPO;
-  const main = process.env.NEXT_PUBLIC_GITHUB_MAIN;
+  const refOwner = process.env.NEXT_PUBLIC_GITHUB_OWNER
+    ? process.env.NEXT_PUBLIC_GITHUB_OWNER
+    : "unicef";
+  const repo = process.env.NEXT_PUBLIC_GITHUB_REPO
+    ? process.env.NEXT_PUBLIC_GITHUB_REPO
+    : "publicgoods-candidates";
+  const branch = process.env.NEXT_PUBLIC_GITHUB_BRANCH
+    ? process.env.NEXT_PUBLIC_GITHUB_BRANCH
+    : "main";
   const owner = session.ghUsername;
 
   function sleep(ms) {
@@ -150,11 +156,14 @@ export default function Questions(props) {
     setStage1(WAIT);
 
     // Get a reference to master branch
-    response = await octokit.request(`GET /repos/{owner}/{repo}/git/refs/heads/{main}`, {
-      owner,
-      repo,
-      main,
-    });
+    response = await octokit.request(
+      `GET /repos/{owner}/{repo}/git/refs/heads/{branch}`,
+      {
+        owner,
+        repo,
+        branch,
+      }
+    );
 
     console.log(response);
 
@@ -220,7 +229,7 @@ export default function Questions(props) {
       repo,
       title: "Add review",
       head: owner + ":" + branchName,
-      base: main,
+      base: branch,
       body: "Add review from webapp",
     });
 
